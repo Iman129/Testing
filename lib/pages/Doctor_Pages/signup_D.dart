@@ -25,10 +25,11 @@ class _signUpDocState extends State<signUpDoc> {
   final TextEditingController _educationController = TextEditingController();
   final TextEditingController _experienceController = TextEditingController();
   final TextEditingController _institutionController = TextEditingController();
-  final TextEditingController _specializationController = TextEditingController();
+  final TextEditingController _specializationController =
+      TextEditingController();
   final TextEditingController _timingController = TextEditingController();
   final TextEditingController _daysController = TextEditingController();
-   final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +66,7 @@ class _signUpDocState extends State<signUpDoc> {
                   height: 20,
                 ),
                 reuseableTextField(
-                  
                     "Enter Name", Icons.person_outline, false, _nameController),
-                    
                 const SizedBox(
                   height: 20,
                 ),
@@ -93,11 +92,11 @@ class _signUpDocState extends State<signUpDoc> {
                 ),
                 reuseableTextField("Enter CNIC", Icons.card_membership_outlined,
                     false, _cnicController),
-                     const SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                reuseableTextField("Enter Gender", Icons.card_membership_outlined,
-                    false, _genderController),
+                reuseableTextField("Enter Gender",
+                    Icons.card_membership_outlined, false, _genderController),
                 const SizedBox(
                   height: 20,
                 ),
@@ -111,8 +110,11 @@ class _signUpDocState extends State<signUpDoc> {
                 const SizedBox(
                   height: 20,
                 ),
-                reuseableTextField("Your Specialization",
-                    Icons.military_tech_outlined, false, _specializationController),
+                reuseableTextField(
+                    "Your Specialization",
+                    Icons.military_tech_outlined,
+                    false,
+                    _specializationController),
                 const SizedBox(
                   height: 20,
                 ),
@@ -150,14 +152,14 @@ class _signUpDocState extends State<signUpDoc> {
                           'D_Address': _addressController.text,
                           'D_PhoneNumber': _phoneController.text,
                           'D_Cnic': _cnicController.text,
-                          'D_Eductaion': _educationController.text,
+                          'D_Education': _educationController.text,
                           'D_Gender': _genderController.text,
                           'D_Experience': _experienceController.text,
                           'D_Institution': _institutionController.text,
                           'D_Specialization': _specializationController.text,
                           'D_Timings': _timingController.text,
                           'D_Days': _daysController.text,
-                          'status':"available",
+                          'status': "available",
                           'D_Id': UID,
                           "role": "doctor",
                         })

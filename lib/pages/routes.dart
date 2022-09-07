@@ -5,6 +5,11 @@ class MyRoutes{
    static String DocProfileR="/dprofile";
    static String DocDashR="/ddash";
    static String DocUpdateR="/dupdate";
+   static String Updatepass="/updpass";
+   static String Forgotpass="/forgotpass";
+   
+
+   
    // static String HomeDetailsRoute="/hdetail";
     //static String CartRoute="/cart";
 }

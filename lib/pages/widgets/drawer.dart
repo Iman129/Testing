@@ -1,13 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mychatapp/pages/routes.dart';
 import 'package:mychatapp/pages/theme/themes.dart';
 import 'package:velocity_x/velocity_x.dart%20';
 
+import '../Doctor_Pages/signin_D.dart';
+
 //import '../utils/routes.dart';
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<MyDrawer> createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
+  final currentUser = FirebaseAuth.instance;
+  String name = '';
+  String email = '';
+  void getData() async {
+    User? docID = FirebaseAuth.instance.currentUser!;
+    var vari = await FirebaseFirestore.instance
+        .collection('Doctors')
+        .doc(docID.uid)
+        .get();
+
+    setState(() {
+      if (vari.data() != null) {
+        name = vari.data()!['D_Name'].toString();
+        email = vari.data()!['D_Email'];
+      } else {
+        name = "Received Empty Value";
+        email = "Received Empty Value";
+      }
+    });
+  }
+
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   void HomeFunc(BuildContext context) async {
     Navigator.pushNamed(context, MyRoutes.DocHomeR);
   }
@@ -42,12 +78,12 @@ class MyDrawer extends StatelessWidget {
               child: UserAccountsDrawerHeader(
                 margin: EdgeInsets.zero,
                 decoration: BoxDecoration(color: Colors.indigo),
-                accountName: Text("Iman Ali",
+                accountName: Text("$name",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
                         color: Colors.white)),
-                accountEmail: Text("aliiman288@gmail.com",
+                accountEmail: Text("$email",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.normal,
@@ -70,16 +106,18 @@ class MyDrawer extends StatelessWidget {
               title: Text(
                 "Home",
                 textScaleFactor: 1.2,
-                style: TextStyle(  color: MyTheme.darkbluishColor,),
+                style: TextStyle(
+                  color: MyTheme.darkbluishColor,
+                ),
               ),
             ),
             ListTile(
-               onTap: () {
+              onTap: () {
                 ProfFunc(context);
               },
               leading: Icon(
                 CupertinoIcons.profile_circled,
-                 color: MyTheme.darkbluishColor,
+                color: MyTheme.darkbluishColor,
               ),
               title: Text(
                 "Profile",
@@ -88,12 +126,12 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-               onTap: () {
+              onTap: () {
                 DashFunc(context);
               },
               leading: Icon(
                 CupertinoIcons.graph_circle_fill,
-                 color: MyTheme.darkbluishColor,
+                color: MyTheme.darkbluishColor,
               ),
               title: Text(
                 "Dashboard",
@@ -107,10 +145,24 @@ class MyDrawer extends StatelessWidget {
               },
               leading: Icon(
                 CupertinoIcons.doc_chart_fill,
-                 color: MyTheme.darkbluishColor,
+                color: MyTheme.darkbluishColor,
               ),
               title: Text(
                 "Update Profile",
+                textScaleFactor: 1.2,
+                style: TextStyle(color: MyTheme.darkbluishColor),
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushNamed(context, MyRoutes.Updatepass);
+              },
+              leading: Icon(
+                Icons.password_sharp,
+                color: MyTheme.darkbluishColor,
+              ),
+              title: Text(
+                "Reset Password",
                 textScaleFactor: 1.2,
                 style: TextStyle(color: MyTheme.darkbluishColor),
               ),
@@ -119,9 +171,11 @@ class MyDrawer extends StatelessWidget {
               height: 30,
               color: Colors.black,
             ),
-               ListTile(
+            ListTile(
               onTap: () {
-                UpdFunc(context);
+                FirebaseAuth.instance.signOut();
+                  Navigator.push(context,
+                MaterialPageRoute(builder: (context) => signInDoc()));
               },
               leading: Icon(
                 Icons.logout,

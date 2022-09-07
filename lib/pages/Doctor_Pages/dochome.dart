@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mychatapp/pages/routes.dart';
 
@@ -10,6 +12,32 @@ class DocHome extends StatefulWidget {
 }
 
 class _DocHomeState extends State<DocHome> {
+  final currentUser = FirebaseAuth.instance;
+  String name = '';
+  String email = '';
+  void getData() async {
+    User? docID = FirebaseAuth.instance.currentUser!;
+    var vari = await FirebaseFirestore.instance
+        .collection('Doctors')
+        .doc(docID.uid)
+        .get();
+
+    setState(() {
+      if (vari.data() != null) {
+        name = vari.data()!['D_Name'].toString();
+        email = vari.data()!['D_Email'];
+      } else {
+        name = "Received Empty Value";
+        email = "Received Empty Value";
+      }
+    });
+  }
+
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   bool isloading = false;
   @override
   Widget build(BuildContext context) {
@@ -39,7 +67,7 @@ class _DocHomeState extends State<DocHome> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                "Welcome Doctor!",
+                "Welcome Dr $name!",
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -64,15 +92,16 @@ class _DocHomeState extends State<DocHome> {
                 mainAxisSpacing: 6,
                 children: [
                   Container(
-                    decoration: BoxDecoration
-                    (boxShadow: [
-                      BoxShadow(       
-                   color: Colors.indigo.withOpacity(.5),
-                  // blurRadius: 10.0, // soften the shadow
-                   //spreadRadius: 0.0, //extend the shadow
-                    offset: Offset(
-                      2.0, // Move to right 10  horizontally
-                        2.0, )  )]),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                          color: Colors.indigo.withOpacity(.5),
+                          // blurRadius: 10.0, // soften the shadow
+                          //spreadRadius: 0.0, //extend the shadow
+                          offset: Offset(
+                            2.0, // Move to right 10  horizontally
+                            2.0,
+                          ))
+                    ]),
                     child: Card(
                       color: Colors.indigo,
                       clipBehavior: Clip.antiAlias,
@@ -108,15 +137,16 @@ class _DocHomeState extends State<DocHome> {
                     ),
                   ),
                   Container(
-                decoration: BoxDecoration
-                    (boxShadow: [
-                      BoxShadow(       
-                   color: Colors.indigo.withOpacity(.5),
-                  // blurRadius: 10.0, // soften the shadow
-                   //spreadRadius: 0.0, //extend the shadow
-                    offset: Offset(
-                      2.0, // Move to right 10  horizontally
-                        2.0, )  )]),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                          color: Colors.indigo.withOpacity(.5),
+                          // blurRadius: 10.0, // soften the shadow
+                          //spreadRadius: 0.0, //extend the shadow
+                          offset: Offset(
+                            2.0, // Move to right 10  horizontally
+                            2.0,
+                          ))
+                    ]),
                     child: Card(
                       color: Colors.indigo,
                       clipBehavior: Clip.antiAlias,
@@ -150,15 +180,16 @@ class _DocHomeState extends State<DocHome> {
                     ),
                   ),
                   Container(
-            decoration: BoxDecoration
-                    (boxShadow: [
-                      BoxShadow(       
-                   color: Colors.indigo.withOpacity(.5),
-                  // blurRadius: 10.0, // soften the shadow
-                   //spreadRadius: 0.0, //extend the shadow
-                    offset: Offset(
-                      2.0, // Move to right 10  horizontally
-                        2.0, )  )]),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                          color: Colors.indigo.withOpacity(.5),
+                          // blurRadius: 10.0, // soften the shadow
+                          //spreadRadius: 0.0, //extend the shadow
+                          offset: Offset(
+                            2.0, // Move to right 10  horizontally
+                            2.0,
+                          ))
+                    ]),
                     child: Card(
                       color: Colors.indigo,
                       clipBehavior: Clip.antiAlias,
@@ -175,7 +206,7 @@ class _DocHomeState extends State<DocHome> {
                           children: [
                             Image.asset(
                               "assets/images/dashb.png",
-                             height: 130,
+                              height: 130,
                               width: 150,
                               fit: BoxFit.cover,
                             ),
@@ -192,15 +223,16 @@ class _DocHomeState extends State<DocHome> {
                     ),
                   ),
                   Container(
-                decoration: BoxDecoration
-                    (boxShadow: [
-                      BoxShadow(       
-                   color: Colors.indigo.withOpacity(.5),
-                  // blurRadius: 10.0, // soften the shadow
-                   //spreadRadius: 0.0, //extend the shadow
-                    offset: Offset(
-                      2.0, // Move to right 10  horizontally
-                        2.0, )  )]),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                          color: Colors.indigo.withOpacity(.5),
+                          // blurRadius: 10.0, // soften the shadow
+                          //spreadRadius: 0.0, //extend the shadow
+                          offset: Offset(
+                            2.0, // Move to right 10  horizontally
+                            2.0,
+                          ))
+                    ]),
                     child: Card(
                       color: Colors.indigo,
                       clipBehavior: Clip.antiAlias,
@@ -260,7 +292,8 @@ class _DocHomeState extends State<DocHome> {
                     Text(
                       "Home",
                       style: TextStyle(
-                          color: MyTheme.darkbluishColor, fontWeight: FontWeight.bold),
+                          color: MyTheme.darkbluishColor,
+                          fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -277,7 +310,8 @@ class _DocHomeState extends State<DocHome> {
                     Text(
                       "Settings",
                       style: TextStyle(
-                          color: MyTheme.darkbluishColor, fontWeight: FontWeight.bold),
+                          color: MyTheme.darkbluishColor,
+                          fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -294,7 +328,8 @@ class _DocHomeState extends State<DocHome> {
                     Text(
                       "History",
                       style: TextStyle(
-                          color:MyTheme.darkbluishColor, fontWeight: FontWeight.bold),
+                          color: MyTheme.darkbluishColor,
+                          fontWeight: FontWeight.bold),
                     )
                   ],
                 ),

@@ -1,7 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mychatapp/pages/Doctor_Pages/docdashboard.dart';
+import 'package:mychatapp/pages/Doctor_Pages/dochome.dart';
+import 'package:mychatapp/pages/Doctor_Pages/doctorprofile.dart';
+import 'package:mychatapp/pages/Doctor_Pages/signin_D.dart';
+import 'package:mychatapp/pages/Doctor_Pages/docUpdate.dart';
 import 'package:mychatapp/pages/mainHome.dart';
+import 'package:mychatapp/pages/routes.dart';
+import 'package:mychatapp/passwordupdate/forgotpassword.dart';
+import 'package:mychatapp/passwordupdate/updatepass.dart';
 import 'firebase_options.dart';
 
 
@@ -19,20 +27,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
     
         primarySwatch: Colors.blue,
       ),
       // home: auth.currentUser == null ? SigninScreen() : HomeScreen(),
-      home: MainHome(),
-      /*    routes: {
+      
+         routes: {
         "/": (context) =>MainHome() , //by default this page
         MyRoutes.DocHomeR: (context) => DocHome(),
         MyRoutes.DocProfileR: (context) => docProfile(),
         MyRoutes.DocDashR: (context) => DocDashboard(),
-        MyRoutes.DocUpdateR: (context) => DocUpdate(),
-      }, */
+        MyRoutes.DocUpdateR: (context) => UpdateDoc(),
+         MyRoutes.Forgotpass: (context) => ForgotPassword(),
+         MyRoutes.Updatepass: (context) => ChangePassword(),
+      }, 
     );
   }
 }

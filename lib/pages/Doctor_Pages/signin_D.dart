@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mychatapp/pages/Doctor_Pages/dochome.dart';
 import 'package:mychatapp/pages/Doctor_Pages/signup_D.dart';
+import 'package:mychatapp/passwordupdate/forgotpassword.dart';
 
 import '../../reuseable_widget/reuseablewidget.dart';
 import '../utils/colors_utils.dart';
@@ -57,10 +59,8 @@ class _signInDocState extends State<signInDoc> {
                           password: _passwordTextController.text)
                       .then((value) {
                     // print(FirebaseAuth.instance.currentUser);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreenDoc()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => DocHome()));
                   }).onError((error, stackTrace) {
                     print("Error: ${error.toString()}");
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -86,6 +86,10 @@ class _signInDocState extends State<signInDoc> {
                   });
                 }),
                 signUpOption(),
+                SizedBox(
+                  height: 10,
+                ),
+                forgotpass(),
               ],
             ),
           ),
@@ -106,11 +110,39 @@ class _signInDocState extends State<signInDoc> {
         ),
         GestureDetector(
           onTap: () {
+            //try{}
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => signUpDoc()));
           },
           child: const Text(
             "Sign Up",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row forgotpass() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Forgot Password? ",
+          style: TextStyle(
+            color: Colors.white70,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ForgotPassword()));
+          },
+          child: const Text(
+            "Click here",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
